@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorldVest Re — A Stablecoin / Reinsurance Model</title>
+<meta name="description" content="WorldVest Re is an alternative insurance solution utilizing a stablecoin/reinsurance model. WVDC is a fully reserved digital dollar for funding reinsurance, captives, and claims settlement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:      #0D1B2A;   /* underwriting ink */
+    --ink-2:    #13253A;   /* raised panel */
+    --hairline: #2A3D55;   /* rules on ink */
+    --paper:    #F2F4F6;   /* cool ledger paper */
+    --paper-2:  #E7EBEF;
+    --line:     #C9D2DA;   /* rules on paper */
+    --brass:    #B98A2F;   /* marine-insurance brass */
+    --brass-lt: #D8B25E;
+    --peg:      #1E7A5A;   /* stable green, used sparingly */
+    --muted:    #5B6B7C;
+    --muted-ink:#8FA0B3;
+    --display:  'Libre Caslon Display', Georgia, serif;
+    --body:     'Public Sans', -apple-system, sans-serif;
+    --mono:     'IBM Plex Mono', ui-monospace, monospace;
+    --max: 1120px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  ::selection{background:var(--brass-lt);color:var(--ink)}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:2px}
+
+  /* ---------- eyebrow / labels ---------- */
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--brass);
+    display:flex;align-items:center;gap:12px;
+  }
+  .eyebrow::before{content:"";width:28px;height:1px;background:var(--brass)}
+
+  /* ---------- top bar ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(13,27,42,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    height:60px;color:var(--paper);
+  }
+  .brand{
+    font-family:var(--display);
+    font-size:20px;letter-spacing:.02em;
+    text-decoration:none;display:flex;align-items:baseline;gap:8px;
+  }
+  .brand .re{color:var(--brass-lt);font-style:italic}
+  .nav-links{display:flex;gap:28px;align-items:center;font-size:14px}
+  .nav-links a{text-decoration:none;color:var(--muted-ink);transition:color .15s}
+  .nav-links a:hover{color:var(--paper)}
+  .nav-cta{
+    font-family:var(--mono);font-size:12px;letter-spacing:.06em;
+    color:var(--ink)!important;background:var(--brass-lt);
+    padding:8px 16px;text-decoration:none;
+    transition:background .15s;
+  }
+  .nav-cta:hover{background:#E6C578}
+  @media(max-width:720px){.nav-links a:not(.nav-cta){display:none}}
+
+  /* ---------- hero : earth banner, centered ---------- */
+  .hero{
+    background:var(--ink);
+    color:var(--paper);
+    position:relative;
+  }
+  .hero-banner{
+    position:relative;
+    background:var(--ink) url('wvrelanding.jpg') center / cover no-repeat;
+  }
+  .hero-banner::before{ /* ink overlay keeps type legible over the image */
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,
+      rgba(13,27,42,.60) 0%,
+      rgba(13,27,42,.38) 45%,
+      rgba(13,27,42,.94) 100%);
+  }
+  .hero-inner{
+    position:relative;z-index:1;
+    padding:110px 24px 96px;
+    max-width:840px;margin:0 auto;
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;
+  }
+  .hero h1{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:clamp(44px,7vw,80px);
+    line-height:1.05;
+    letter-spacing:.01em;
+    margin:0 0 22px;
+  }
+  .hero h1 .re{font-style:italic;color:var(--brass-lt)}
+  .hero .slogan{
+    margin:0 auto 18px;
+  }
+  .hero .slogan .s1{
+    display:block;
+    font-size:clamp(19px,2.4vw,24px);
+    font-weight:600;
+    letter-spacing:.02em;
+    color:var(--paper);
+  }
+  .hero .slogan .s2{
+    display:block;
+    margin-top:6px;
+    font-size:clamp(15px,1.8vw,18px);
+    font-weight:400;
+    color:var(--muted-ink);
+  }
+  .hero .sub{
+    font-size:15px;color:var(--muted-ink);
+    max-width:56ch;margin:0 auto 38px;
+  }
+  .hero .sub strong{color:var(--paper);font-weight:600}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+  .btn{
+    display:inline-block;text-decoration:none;
+    font-family:var(--mono);font-size:13px;letter-spacing:.05em;
+    padding:14px 26px;transition:all .15s;
+  }
+  .btn-primary{background:var(--brass-lt);color:var(--ink)}
+  .btn-primary:hover{background:#E6C578}
+  .btn-ghost{border:1px solid var(--hairline);color:var(--paper)}
+  .btn-ghost:hover{border-color:var(--brass-lt);color:var(--brass-lt)}
+
+  /* ---------- schedule A : the peg, set like a treaty schedule ---------- */
+  .schedule{
+    border-top:1px solid var(--hairline);
+    background:var(--ink-2);
+    position:relative;z-index:1;
+  }
+  .schedule-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:20px 0 0;flex-wrap:wrap;gap:8px;
+  }
+  .schedule-title{
+    font-family:var(--mono);font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--muted-ink);
+  }
+  .peg-line{
+    font-family:var(--mono);font-size:13px;color:var(--paper);
+  }
+  .peg-line .dot{
+    display:inline-block;width:7px;height:7px;border-radius:50%;
+    background:#39B58A;margin-right:8px;vertical-align:1px;
+  }
+  .schedule-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    border-left:1px solid var(--hairline);
+    margin:18px 0 0;
+  }
+  .cell{
+    border-right:1px solid var(--hairline);
+    padding:22px 20px 26px;
+  }
+  .cell b{
+    display:block;
+    font-family:var(--mono);font-weight:500;
+    font-size:clamp(18px,2vw,24px);
+    color:var(--paper);margin-bottom:6px;
+  }
+  .cell span{font-size:12.5px;color:var(--muted-ink);line-height:1.45;display:block}
+  .schedule-foot{
+    font-size:12.5px;color:var(--muted-ink);
+    border-top:1px solid var(--hairline);
+    padding:14px 0 22px;
+    font-family:var(--mono);
+  }
+  @media(max-width:900px){
+    .schedule-grid{grid-template-columns:repeat(2,1fr);border-top:1px solid var(--hairline)}
+    .cell{border-bottom:1px solid var(--hairline)}
+  }
+  @media(max-width:480px){.schedule-grid{grid-template-columns:1fr}}
+
+  /* ---------- sections ---------- */
+  section{padding:96px 0}
+  .sec-head{max-width:640px;margin-bottom:56px}
+  .sec-head h2{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(28px,3.6vw,42px);
+    line-height:1.12;margin:18px 0 16px;
+  }
+  .sec-head p{color:var(--muted);font-size:16.5px}
+
+  /* ---------- the model : capital tower (signature) ---------- */
+  .model{background:var(--paper)}
+  .model-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;
+  }
+  @media(max-width:880px){.model-grid{grid-template-columns:1fr}}
+  .tower{
+    border:1px solid var(--line);
+    background:#fff;
+    padding:34px 30px 26px;
+  }
+  .tower-caption{
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--muted);
+    display:flex;justify-content:space-between;margin-bottom:22px;
+  }
+  .layer{
+    border:1px solid var(--line);
+    border-left:3px solid var(--brass);
+    padding:14px 18px;
+    margin-bottom:10px;
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    background:var(--paper);
+  }
+  .layer.top{border-left-color:var(--brass-lt);background:#fff}
+  .layer.base{border-left-color:var(--ink);background:var(--paper-2)}
+  .layer .name{font-weight:600;font-size:14.5px}
+  .layer .role{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;white-space:nowrap}
+  .flow{
+    display:flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:11.5px;color:var(--muted);
+    margin:16px 0 6px;
+  }
+  .flow .arrow{color:var(--brass);font-size:14px}
+  .tower-note{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.55}
+  .model-copy h3{
+    font-family:var(--display);font-weight:400;font-size:22px;margin:26px 0 8px;
+  }
+  .model-copy h3:first-child{margin-top:0}
+  .model-copy p{color:var(--muted);font-size:15.5px;margin-bottom:4px}
+
+  /* ---------- use cases ---------- */
+  .uses{background:var(--ink);color:var(--paper)}
+  .uses .sec-head p{color:var(--muted-ink)}
+  .use-grid{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:1px;background:var(--hairline);border:1px solid var(--hairline)}
+  @media(max-width:880px){.use-grid{grid-template-columns:1fr}}
+  .use{background:var(--ink-2);padding:34px 30px 38px}
+  .use.primary{background:var(--ink-2);border-top:3px solid var(--brass-lt)}
+  .use .tag{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--brass-lt);display:block;margin-bottom:16px;
+  }
+  .use h3{font-family:var(--display);font-weight:400;font-size:22px;margin-bottom:12px;line-height:1.25}
+  .use p{color:var(--muted-ink);font-size:14.5px;margin-bottom:14px}
+  .use ul{list-style:none}
+  .use li{
+    font-size:14px;color:var(--muted-ink);
+    padding:9px 0 9px 22px;position:relative;
+    border-top:1px solid var(--hairline);
+  }
+  .use li::before{content:"—";position:absolute;left:0;color:var(--brass)}
+
+  /* ---------- assurance : reserved / verified / redeemable ---------- */
+  .assure{background:var(--paper)}
+  .assure-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+  @media(max-width:880px){.assure-grid{grid-template-columns:1fr;gap:28px}}
+  .assure-item{border-top:2px solid var(--ink);padding-top:22px}
+  .assure-item .q{
+    font-family:var(--mono);font-size:12px;color:var(--brass);
+    display:block;margin-bottom:10px;
+  }
+  .assure-item h3{font-family:var(--display);font-weight:400;font-size:24px;margin-bottom:10px}
+  .assure-item p{color:var(--muted);font-size:14.5px}
+  .genius{
+    margin-top:64px;border:1px solid var(--line);background:#fff;
+    padding:26px 30px;display:flex;gap:18px;align-items:baseline;flex-wrap:wrap;
+    font-size:15px;
+  }
+  .genius .mark{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--brass);text-transform:uppercase;white-space:nowrap}
+
+  /* ---------- contact ---------- */
+  .contact{background:var(--ink);color:var(--paper)}
+  .contact-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:start}
+  @media(max-width:880px){.contact-grid{grid-template-columns:1fr;gap:40px}}
+  .contact h2{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(28px,3.4vw,40px);line-height:1.14;margin:18px 0 16px;
+  }
+  .contact p{color:var(--muted-ink);font-size:15.5px}
+  form{display:flex;flex-direction:column;gap:16px}
+  label{
+    font-family:var(--mono);font-size:11px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--muted-ink);
+    display:block;margin-bottom:7px;
+  }
+  input[type=text],input[type=email]{
+    width:100%;background:var(--ink-2);
+    border:1px solid var(--hairline);
+    color:var(--paper);padding:13px 15px;font-size:15px;
+    font-family:var(--body);
+  }
+  input:focus{border-color:var(--brass-lt);outline:none}
+  .submit{
+    align-self:flex-start;cursor:pointer;border:none;
+    font-family:var(--mono);font-size:13px;letter-spacing:.05em;
+    background:var(--brass-lt);color:var(--ink);
+    padding:14px 28px;margin-top:6px;transition:background .15s;
+  }
+  .submit:hover{background:#E6C578}
+  .fine{font-size:12.5px;color:var(--muted-ink);margin-top:4px}
+  .success{
+    display:none;border:1px solid var(--hairline);background:var(--ink-2);
+    padding:26px;margin-top:4px;
+  }
+  .success.show{display:block}
+  .success b{font-family:var(--display);font-weight:400;font-size:19px;display:block;margin-bottom:6px}
+  .success span{font-size:14px;color:var(--muted-ink)}
+
+  /* ---------- partners / footer ---------- */
+  .partners{background:var(--ink);border-top:1px solid var(--hairline);padding:44px 0}
+  .partners .cap{
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted-ink);margin-bottom:24px;
+  }
+  .partner-row{display:flex;gap:1px;background:var(--hairline);border:1px solid var(--hairline);flex-wrap:wrap}
+  .partner{
+    flex:1;min-width:180px;background:var(--ink-2);
+    padding:22px;text-align:center;
+    font-family:var(--mono);font-size:12px;color:var(--paper);letter-spacing:.06em;
+  }
+  .partner small{
+    display:block;margin-top:6px;
+    font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted-ink);
+  }
+  footer{background:var(--ink);border-top:1px solid var(--hairline);padding:34px 0 44px;color:var(--muted-ink)}
+  .foot-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
+  .foot-brand{font-family:var(--display);font-size:18px;color:var(--paper)}
+  .foot-brand .re{color:var(--brass-lt);font-style:italic}
+  .disclaimer{font-size:12px;line-height:1.65;max-width:640px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">WorldVest <span class="re">Re</span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#model">The model</a>
+      <a href="#uses">What it's for</a>
+      <a href="#assure">Reserves</a>
+      <a class="nav-cta" href="#contact">Book a call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <div class="hero">
+    <div class="hero-banner">
+      <div class="hero-inner">
+        <h1>WorldVest <span class="re">Re</span></h1>
+        <p class="slogan"><span class="s1">Alternative Insurance Solution</span><span class="s2">Built on a Stablecoin&#8202;/&#8202;Reinsurance Model</span></p>
+        <p class="sub"><strong>WVDC</strong> is WorldVest Re's digital dollar: redeemable 1:1 for U.S. dollars, interoperable with USDC, and settled in seconds instead of days.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#contact">Book an exploratory call</a>
+          <a class="btn btn-ghost" href="#model">How the model works</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schedule A : peg + guarantees, set like a treaty schedule -->
+    <div class="schedule">
+      <div class="wrap">
+        <div class="schedule-head">
+          <span class="schedule-title">Schedule A — WorldVest Digital Coin (WVDC)</span>
+          <span class="peg-line"><span class="dot" aria-hidden="true"></span>1 WVDC = 1.00 USD</span>
+        </div>
+        <div class="schedule-grid" role="list">
+          <div class="cell" role="listitem"><b>1 : 1</b><span>Redeemable at par for U.S. dollars, any time</span></div>
+          <div class="cell" role="listitem"><b>100%</b><span>Reserved in cash &amp; short-term U.S. treasuries</span></div>
+          <div class="cell" role="listitem"><b>Monthly</b><span>Independent reserve attestations, published</span></div>
+          <div class="cell" role="listitem"><b>24 / 7</b><span>On-chain settlement — no cutoffs, no wire windows</span></div>
+          <div class="cell" role="listitem"><b>T + 0</b><span>Same-day funding of collateral and claims, USDC-interoperable</span></div>
+        </div>
+        <p class="schedule-foot">Reserves held with regulated custodians, segregated from operating funds. Live reserve dashboard at launch.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ THE MODEL ============ -->
+  <section class="model" id="model">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">The model</span>
+        <h2>Risk capital that clears like cash, because it is cash.</h2>
+        <p>In a traditional program, money is the slow part: premium wires, collateral postings, letters of credit, claims funding across borders. WorldVest Re replaces the idle, in-transit dollar with a reserved digital one.</p>
+      </div>
+      <div class="model-grid">
+
+        <!-- signature: the capital tower -->
+        <div class="tower" aria-label="Diagram of a reinsurance program funded in WVDC">
+          <div class="tower-caption"><span>Program structure</span><span>Funded in WVDC</span></div>
+
+          <div class="flow"><span>Premium &amp; capital in</span><span class="arrow">▼</span><span>USD / USDC → WVDC at par</span></div>
+
+          <div class="layer top">
+            <span class="name">Excess layers</span>
+            <span class="role">Reinsurance capacity</span>
+          </div>
+          <div class="layer">
+            <span class="name">Working layer</span>
+            <span class="role">Collateral &amp; trust funding</span>
+          </div>
+          <div class="layer base">
+            <span class="name">Retention</span>
+            <span class="role">Captive / self-insured reserves</span>
+          </div>
+
+          <div class="flow"><span>Claims out</span><span class="arrow">▼</span><span>Redeem WVDC → USD at par</span></div>
+
+          <p class="tower-note">Every layer of the tower holds the same instrument: a fully reserved digital dollar, auditable on-chain, redeemable when claims come due.</p>
+        </div>
+
+        <div class="model-copy">
+          <h3>Fund the structure</h3>
+          <p>Cedents, captives, and reinsurers capitalize the program in WVDC. Reserves are visible on-chain, attested monthly, and never leave regulated custody.</p>
+          <h3>Move between parties</h3>
+          <p>Premium cessions, collateral top-ups, and inter-entity transfers settle in seconds, 24/7 — not on banking hours, and not by correspondent chains.</p>
+          <h3>Pay the claim</h3>
+          <p>When losses hit, redeem to U.S. dollars at par or swap to USDC. No lockups, no withdrawal windows. The money is there because it never stopped being money.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ USE CASES ============ -->
+  <section class="uses" id="uses">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">What it's for</span>
+        <h2>Built first for reinsurance and captive funding.</h2>
+        <p>Anywhere reserves must be safe, liquid, and provable — and anywhere the wire is the bottleneck.</p>
+      </div>
+      <div class="use-grid">
+
+        <div class="use primary">
+          <span class="tag">Primary use case</span>
+          <h3>Reinsurance &amp; captive reserves</h3>
+          <p>Cedents, captives, and TPAs hold reserves against future claims — money that has to be safe, liquid, and auditable. WVDC lets you hold and move those reserves as stable, redeemable cash equivalents, visible on-chain.</p>
+          <ul>
+            <li>Fund captive structures and self-insured plans</li>
+            <li>Post and release collateral same-day</li>
+            <li>Auditable position and transfer history</li>
+            <li>Redeem to U.S. dollars when claims come due</li>
+          </ul>
+        </div>
+
+        <div class="use">
+          <span class="tag">Also supports</span>
+          <h3>Premium &amp; claims settlement</h3>
+          <p>Move premium cessions and claim payments across borders and entities in seconds, for a fraction of wire and FX costs — with a clear off-ramp to local currency.</p>
+        </div>
+
+        <div class="use">
+          <span class="tag">Also supports</span>
+          <h3>Corporate treasury</h3>
+          <p>Hold operating cash as stable, redeemable digital dollars. Move between entities, markets, and USDC liquidity instantly — no cutoff times, no correspondent banks.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ASSURANCE ============ -->
+  <section class="assure" id="assure">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">How your money is held</span>
+        <h2>Every WVDC is a claim on a real dollar.</h2>
+      </div>
+      <div class="assure-grid">
+        <div class="assure-item">
+          <span class="q">Will it hold its value?</span>
+          <h3>Reserved</h3>
+          <p>Every WVDC is backed one-for-one by cash and short-term U.S. treasuries, held at regulated custodians and segregated from WorldVest Re's own operating funds. It is designed to stay at exactly one dollar.</p>
+        </div>
+        <div class="assure-item">
+          <span class="q">Who is holding my money?</span>
+          <h3>Verified</h3>
+          <p>Reserves sit in segregated accounts at named third-party custodians — not with us alone. Independent accountants attest to reserves on a published schedule, and our contracts are audited and continuously monitored.</p>
+        </div>
+        <div class="assure-item">
+          <span class="q">Can I redeem at par, any time?</span>
+          <h3>Redeemable</h3>
+          <p>Redeem WVDC 1:1 for U.S. dollars or swap to USDC at par, any time. No lockups, no withdrawal windows — your money is available when claims come due.</p>
+        </div>
+      </div>
+      <div class="genius">
+        <span class="mark">Regulatory posture</span>
+        <span>Built for the era of the <strong>GENIUS Act</strong>: clear legal structure, licensed partners, and no gray zones.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">Get in touch</span>
+        <h2>Talk to us about your program.</h2>
+        <p>Whether you're a cedent, a captive manager, a TPA, a self-insured employer, or a broker — leave your email and we'll schedule a 30-minute exploratory call. No pitch deck, just a working conversation about whether a stable digital dollar fits how you fund and hold reserves.</p>
+      </div>
+      <div>
+        <form id="callForm" novalidate>
+          <div>
+            <label for="name">Name (optional)</label>
+            <input type="text" id="name" name="name" autocomplete="name">
+          </div>
+          <div>
+            <label for="email">Work email</label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+          <button class="submit" type="submit">Request a call</button>
+          <p class="fine">We'll only use your email to schedule the call. No newsletters, no spam.</p>
+        </form>
+        <div class="success" id="successBox" role="status">
+          <b>Request received</b>
+          <span>We'll email you within one business day to find a time that works.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PARTNERS ============ -->
+  <div class="partners">
+    <div class="wrap">
+      <p class="cap">Reserves, custody, and audits handled by regulated partners</p>
+      <div class="partner-row">
+        <div class="partner">Banking Partner<small>To be announced</small></div>
+        <div class="partner">Reserve Custodian<small>To be announced</small></div>
+        <div class="partner">Independent Auditor<small>To be announced</small></div>
+        <div class="partner">Legal Counsel<small>To be announced</small></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <span class="foot-brand">WorldVest <span class="re">Re</span></span>
+    <p class="disclaimer">© 2026 WorldVest Re. WVDC is a digital asset. This page is for informational purposes only and does not constitute an offer to sell or a solicitation to buy securities, insurance, or reinsurance, or financial, legal, or tax advice. Digital assets involve risk. Availability subject to applicable law and licensing.</p>
+  </div>
+</footer>
+
+<script>
+  const form = document.getElementById('callForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const email = document.getElementById('email');
+    if(!email.value || !email.checkValidity()){
+      email.focus();
+      email.style.borderColor = '#C05C4A';
+      return;
+    }
+    form.style.display = 'none';
+    document.getElementById('successBox').classList.add('show');
+  });
+</script>
+
+</body>
+</html>
