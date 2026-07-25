@@ -236,8 +236,7 @@
   /* ---------- schedule A (inside section IV) ---------- */
   .schedule-head{
     display:flex;justify-content:space-between;align-items:baseline;
-    padding:0 0 14px;flex-wrap:wrap;gap:8px;
-    border-bottom:1px solid var(--hairline-2);
+    padding:0 0 12px;flex-wrap:wrap;gap:8px;
   }
   .schedule-title{
     font-family:var(--mono);font-size:11px;letter-spacing:.22em;
@@ -250,20 +249,27 @@
   }
   .schedule-grid{
     display:grid;grid-template-columns:repeat(5,1fr);
-    border-left:1px solid var(--hairline-2);
-    margin:0 0 62px;
+    background:var(--ink-3);
+    border:1px solid var(--hairline-2);
+    margin:0 0 66px;
   }
-  .cell{border-right:1px solid var(--hairline-2);padding:22px 20px 26px;background:var(--ink)}
+  .cell{padding:24px 22px 28px;border-right:1px solid var(--hairline-2)}
+  .cell:last-child{border-right:none}
   .cell b{
     display:block;font-family:var(--mono);font-weight:500;
     font-size:clamp(18px,2vw,24px);color:var(--paper);margin-bottom:6px;
   }
   .cell span{font-size:12.5px;color:var(--muted);line-height:1.45;display:block}
   @media(max-width:900px){
-    .schedule-grid{grid-template-columns:repeat(2,1fr);border-top:1px solid var(--hairline-2)}
+    .schedule-grid{grid-template-columns:repeat(2,1fr)}
     .cell{border-bottom:1px solid var(--hairline-2)}
+    .cell:nth-child(2n){border-right:none}
+    .cell:last-child{border-bottom:none}
   }
-  @media(max-width:480px){.schedule-grid{grid-template-columns:1fr}}
+  @media(max-width:480px){
+    .schedule-grid{grid-template-columns:1fr}
+    .cell{border-right:none}
+  }
 
   /* ---------- III. where it applies ---------- */
   .use-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:1px;background:var(--hairline);border:1px solid var(--hairline)}
@@ -286,8 +292,11 @@
   /* ---------- IV. reserves ---------- */
   .assure-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
   @media(max-width:880px){.assure-grid{grid-template-columns:1fr;gap:30px}}
-  .assure-item{border-top:2px solid var(--brass);padding-top:22px}
-  .assure-item h3{font-family:var(--display);font-weight:400;font-size:24px;margin-bottom:10px;color:var(--paper)}
+  .assure-item h3{
+    font-family:var(--display);font-weight:400;font-size:24px;
+    color:var(--paper);margin:0 0 12px;
+    padding-bottom:12px;border-bottom:2px solid var(--brass);
+  }
   .assure-item p{color:var(--muted);font-size:14.5px}
 
   /* ---------- contact ---------- */
@@ -322,8 +331,11 @@
   .success span{font-size:14px;color:var(--muted)}
 
   /* ---------- partners / footer ---------- */
-  .partners{background:var(--ink);border-top:1px solid var(--hairline);padding:44px 0 0}
-  .partner-row{display:flex;gap:1px;background:var(--hairline);border:1px solid var(--hairline);flex-wrap:wrap}
+  .partner-row{
+    display:flex;gap:1px;flex-wrap:wrap;
+    background:var(--hairline-2);border:1px solid var(--hairline-2);
+    margin-top:64px;
+  }
   .partner{
     flex:1;min-width:180px;background:var(--ink-2);padding:22px;text-align:center;
     font-family:var(--mono);font-size:12px;color:var(--paper);letter-spacing:.06em;
@@ -332,7 +344,7 @@
     display:block;margin-top:6px;font-size:10.5px;letter-spacing:.14em;
     text-transform:uppercase;color:var(--dim);
   }
-  footer{background:var(--ink);padding:38px 0 44px;color:var(--dim)}
+  footer{background:var(--ink);border-top:1px solid var(--hairline);padding:38px 0 44px;color:var(--dim)}
   .foot-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
   .foot-brand{font-family:var(--display);font-size:18px;color:var(--paper)}
   .foot-brand .re{color:var(--brass-lt);font-style:italic}
@@ -366,7 +378,7 @@
 
   <div class="hero-copy">
     <div class="inner">
-      <p class="slogan"><span class="s1">WorldVest <span class="re">Re</span>insurance Solution</span></p>
+      <p class="slogan"><span class="s1">WorldVest <span class="re">Re</span> Insurance Solution</span></p>
       <p class="sub">A three-year level-funded premium for self-funded medical benefit plans — funded in a fully reserved digital dollar.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#contact">Book an exploratory call</a>
@@ -379,7 +391,7 @@
   <section class="band-2" id="challenge">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow"><span class="num">I</span> For CFOs</span>
+        <span class="eyebrow">For CFOs</span>
         <h2>Self-funding solves cost. It doesn't solve predictability.</h2>
       </div>
       <div class="cs-grid">
@@ -414,7 +426,7 @@
   <section class="band-1" id="uses">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow"><span class="num">II</span> Where it applies</span>
+        <span class="eyebrow">Where it applies</span>
         <h2>Built first for benefit plans. Useful anywhere reserves must be liquid and provable.</h2>
       </div>
       <div class="use-grid">
@@ -451,7 +463,7 @@
   <section class="band-2" id="model">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow"><span class="num">III</span> The model</span>
+        <span class="eyebrow">The model</span>
         <h2>Risk capital that clears like cash, because it is cash.</h2>
         <p>Behind the fixed premium sits a reinsurance tower — and every layer of it is funded in a reserved digital dollar rather than money in transit.</p>
       </div>
@@ -497,7 +509,7 @@
   <section class="band-1" id="assure">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow"><span class="num">IV</span> How your money is held</span>
+        <span class="eyebrow">How your money is held</span>
         <h2>Every WVDC is a claim on a real dollar.</h2>
         <p><strong>WVDC</strong> is WorldVest Re's digital dollar — the instrument every layer of the structure is funded in. Redeemable 1:1 for U.S. dollars, interoperable with USDC, and settled in seconds instead of days. Built for the era of the <strong>GENIUS Act</strong>.</p>
       </div>
@@ -527,6 +539,13 @@
           <h3>Redeemable</h3>
           <p>Redeem WVDC 1:1 for U.S. dollars or swap to USDC at par, any time. No lockups, no withdrawal windows — your money is available when claims come due.</p>
         </div>
+      </div>
+
+      <div class="partner-row">
+        <div class="partner">Banking Partner<small>To be announced</small></div>
+        <div class="partner">Reserve Custodian<small>To be announced</small></div>
+        <div class="partner">Independent Auditor<small>To be announced</small></div>
+        <div class="partner">Legal Counsel<small>To be announced</small></div>
       </div>
     </div>
   </section>
@@ -559,18 +578,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ============ PARTNERS ============ -->
-  <div class="partners">
-    <div class="wrap">
-      <div class="partner-row">
-        <div class="partner">Banking Partner<small>To be announced</small></div>
-        <div class="partner">Reserve Custodian<small>To be announced</small></div>
-        <div class="partner">Independent Auditor<small>To be announced</small></div>
-        <div class="partner">Legal Counsel<small>To be announced</small></div>
-      </div>
-    </div>
-  </div>
 
 </main>
 
