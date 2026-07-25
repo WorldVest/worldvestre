@@ -96,11 +96,10 @@
   /* Full image, uncropped. The image itself dissolves at the left and right
      edges (mask, not an overlay) so it melts into the navy. No vertical fade. */
   .hero-banner img{
-    display:block;
-    width:100%;height:auto;
+    display:block;margin:0 auto;
+    width:auto;max-width:100%;
     max-height:74vh;
-    object-fit:contain;
-    filter:brightness(.86);
+    filter:brightness(.93);
     -webkit-mask-image:linear-gradient(90deg,
       rgba(0,0,0,0) 0%,
       rgba(0,0,0,.15) 6%,
@@ -198,18 +197,6 @@
     padding:10px 0 10px 20px;position:relative;border-top:1px solid var(--hairline-2);
   }
   .cs-card li::before{content:"—";position:absolute;left:0;color:var(--brass)}
-  .cs-figure{
-    border-top:1px solid var(--hairline-2);border-bottom:1px solid var(--hairline-2);
-    padding:18px 0;margin:4px 0 18px;
-  }
-  .cs-figure b{
-    display:block;font-family:var(--mono);font-weight:500;
-    font-size:34px;color:var(--brass-lt);letter-spacing:-.01em;
-  }
-  .cs-figure span{
-    font-family:var(--mono);font-size:11px;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--dim);
-  }
   .cs-note{font-size:14px;color:var(--muted);margin-bottom:0!important}
 
   /* ---------- II. the model ---------- */
@@ -401,7 +388,7 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">For CFOs</span>
-        <h2>Self-funding solves cost. It doesn't solve predictability.</h2>
+        <h2>Self-funding solves cost.<br>It doesn't solve predictability.</h2>
       </div>
       <div class="cs-grid">
 
@@ -420,10 +407,6 @@
           <span class="cs-label">The solution</span>
           <h3>A 3-year level-funded premium</h3>
           <p>WorldVest Re, through its stablecoin&#8202;/&#8202;reinsurance model, offers a level-funded premium held for three years — one fixed, budgetable number across the full term instead of a renewal cycle you can't forecast.</p>
-          <div class="cs-figure">
-            <b>3 &nbsp;years</b>
-            <span>Level-funded premium term</span>
-          </div>
           <p class="cs-note">The reinsurance layer absorbs the volatility. The digital dollar makes the reserves behind it liquid, provable, and same-day — so the guarantee is funded, not just promised.</p>
         </div>
 
@@ -436,7 +419,7 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Where it Applies</span>
-        <h2>Built first for benefit plans. Useful anywhere reserves must be liquid and provable.</h2>
+        <h2>Purpose-built for benefit plans — and at home wherever reserves must stay liquid, safe, and provable.</h2>
       </div>
       <div class="use-grid">
 
