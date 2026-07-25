@@ -91,30 +91,32 @@
   .hero-banner{
     position:relative;
     background:var(--ink);
-    overflow:hidden;
+    min-height:220px;
   }
-  /* The image. object-fit:cover fills the band and crops the overflow.
-     Swap to `contain` if you'd rather see the whole photo with no crop. */
+  /* Full image, uncropped. Left and right edges are feathered into the navy
+     with a mask; top and bottom are blended by the gradient overlay below. */
   .hero-banner img{
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    object-fit:cover;
-    object-position:center;
     display:block;
+    width:100%;height:auto;
+    max-height:74vh;
+    object-fit:contain;
+    -webkit-mask-image:linear-gradient(90deg,
+      rgba(0,0,0,0) 0%, rgba(0,0,0,1) 16%, rgba(0,0,0,1) 84%, rgba(0,0,0,0) 100%);
+    mask-image:linear-gradient(90deg,
+      rgba(0,0,0,0) 0%, rgba(0,0,0,1) 16%, rgba(0,0,0,1) 84%, rgba(0,0,0,0) 100%);
   }
-  .hero-banner::before{
-    content:"";position:absolute;inset:0;z-index:1;
+  .hero-banner::after{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
     background:linear-gradient(180deg,
-      rgba(13,27,42,.55) 0%,
-      rgba(13,27,42,.28) 45%,
-      rgba(13,27,42,.88) 100%);
+      rgba(13,27,42,.88) 0%,
+      rgba(13,27,42,.30) 28%,
+      rgba(13,27,42,0)   52%,
+      rgba(13,27,42,.75) 92%,
+      rgba(13,27,42,1)   100%);
   }
   .hero-inner{
-    position:relative;z-index:2;
-    min-height:clamp(260px,42vw,520px);
-    padding:64px 24px;
-    max-width:840px;margin:0 auto;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    position:absolute;top:0;left:0;right:0;z-index:2;
+    padding:40px 24px 0;
     text-align:center;
   }
   .hero-inner h1{
@@ -135,13 +137,11 @@
   .hero-copy .inner{max-width:720px;margin:0 auto}
   .slogan{margin:0 auto 18px}
   .slogan .s1{
-    display:block;font-size:clamp(20px,2.5vw,26px);
-    font-weight:600;letter-spacing:.02em;color:var(--paper);
+    display:block;font-family:var(--display);
+    font-size:clamp(26px,3.4vw,38px);
+    font-weight:400;letter-spacing:.01em;color:var(--paper);line-height:1.15;
   }
-  .slogan .s2{
-    display:block;margin-top:7px;
-    font-size:clamp(15px,1.8vw,18px);font-weight:400;color:var(--muted);
-  }
+  .slogan .s1 .re{font-style:italic;color:var(--brass-lt)}
   .hero-copy .sub{
     font-size:15.5px;color:var(--muted);
     max-width:60ch;margin:0 auto 34px;
@@ -323,10 +323,6 @@
 
   /* ---------- partners / footer ---------- */
   .partners{background:var(--ink);border-top:1px solid var(--hairline);padding:44px 0 0}
-  .partners .cap{
-    font-family:var(--mono);font-size:11px;letter-spacing:.2em;
-    text-transform:uppercase;color:var(--dim);margin-bottom:24px;
-  }
   .partner-row{display:flex;gap:1px;background:var(--hairline);border:1px solid var(--hairline);flex-wrap:wrap}
   .partner{
     flex:1;min-width:180px;background:var(--ink-2);padding:22px;text-align:center;
@@ -350,8 +346,8 @@
     <a class="brand" href="#top">WorldVest <span class="re">Re</span></a>
     <nav class="nav-links" aria-label="Main">
       <a href="#challenge">For CFOs</a>
-      <a href="#model">The model</a>
       <a href="#uses">Where it applies</a>
+      <a href="#model">The model</a>
       <a href="#assure">Reserves</a>
       <a class="nav-cta" href="#contact">Book a call</a>
     </nav>
@@ -370,8 +366,8 @@
 
   <div class="hero-copy">
     <div class="inner">
-      <p class="slogan"><span class="s1">Alternative Insurance Solution</span><span class="s2">Built on a Stablecoin&#8202;/&#8202;Reinsurance Model</span></p>
-      <p class="sub">A three-year level-funded premium for self-funded medical benefit plans — reinsurance that absorbs the volatility, funded in a fully reserved digital dollar.</p>
+      <p class="slogan"><span class="s1">WorldVest <span class="re">Re</span>insurance Solution</span></p>
+      <p class="sub">A three-year level-funded premium for self-funded medical benefit plans — funded in a fully reserved digital dollar.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#contact">Book an exploratory call</a>
         <a class="btn btn-ghost" href="#model">How the model works</a>
@@ -414,11 +410,48 @@
     </div>
   </section>
 
-  <!-- ============ II. THE MODEL ============ -->
-  <section class="band-1" id="model">
+  <!-- ============ II. WHERE IT APPLIES ============ -->
+  <section class="band-1" id="uses">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow"><span class="num">II</span> The model</span>
+        <span class="eyebrow"><span class="num">II</span> Where it applies</span>
+        <h2>Built first for benefit plans. Useful anywhere reserves must be liquid and provable.</h2>
+      </div>
+      <div class="use-grid">
+
+        <div class="use primary">
+          <span class="tag">Primary use case</span>
+          <h3>Self-funded medical benefit plans</h3>
+          <p>Employers self-funding medical benefits carry the claims risk themselves — and with it, the volatility. WorldVest Re wraps that exposure in a reinsurance layer and funds it in WVDC.</p>
+          <ul>
+            <li>Three-year level-funded premium — one number to budget</li>
+            <li>Reinsurance layer absorbs catastrophic claim years</li>
+            <li>Claim funds available same-day, not on wire windows</li>
+            <li>Auditable reserve position for plan, TPA, and auditor</li>
+          </ul>
+        </div>
+
+        <div class="use">
+          <span class="tag">Also supports</span>
+          <h3>Captive &amp; reinsurance reserves</h3>
+          <p>Cedents, captives, and TPAs hold reserves against future claims. WVDC lets you hold and move them as stable, redeemable cash equivalents — and post or release collateral the same day.</p>
+        </div>
+
+        <div class="use">
+          <span class="tag">Also supports</span>
+          <h3>Premium &amp; claims settlement</h3>
+          <p>Move premium cessions and claim payments across entities and borders in seconds, for a fraction of wire and FX cost — with a clear off-ramp back to U.S. dollars.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ III. THE MODEL ============ -->
+  <section class="band-2" id="model">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow"><span class="num">III</span> The model</span>
         <h2>Risk capital that clears like cash, because it is cash.</h2>
         <p>Behind the fixed premium sits a reinsurance tower — and every layer of it is funded in a reserved digital dollar rather than money in transit.</p>
       </div>
@@ -460,45 +493,8 @@
     </div>
   </section>
 
-  <!-- ============ III. WHERE IT APPLIES ============ -->
-  <section class="band-1" id="uses">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow"><span class="num">III</span> Where it applies</span>
-        <h2>Built first for benefit plans. Useful anywhere reserves must be liquid and provable.</h2>
-      </div>
-      <div class="use-grid">
-
-        <div class="use primary">
-          <span class="tag">Primary use case</span>
-          <h3>Self-funded medical benefit plans</h3>
-          <p>Employers self-funding medical benefits carry the claims risk themselves — and with it, the volatility. WorldVest Re wraps that exposure in a reinsurance layer and funds it in WVDC.</p>
-          <ul>
-            <li>Three-year level-funded premium — one number to budget</li>
-            <li>Reinsurance layer absorbs catastrophic claim years</li>
-            <li>Claim funds available same-day, not on wire windows</li>
-            <li>Auditable reserve position for plan, TPA, and auditor</li>
-          </ul>
-        </div>
-
-        <div class="use">
-          <span class="tag">Also supports</span>
-          <h3>Captive &amp; reinsurance reserves</h3>
-          <p>Cedents, captives, and TPAs hold reserves against future claims. WVDC lets you hold and move them as stable, redeemable cash equivalents — and post or release collateral the same day.</p>
-        </div>
-
-        <div class="use">
-          <span class="tag">Also supports</span>
-          <h3>Premium &amp; claims settlement</h3>
-          <p>Move premium cessions and claim payments across entities and borders in seconds, for a fraction of wire and FX cost — with a clear off-ramp back to U.S. dollars.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- ============ IV. RESERVES ============ -->
-  <section class="band-2" id="assure">
+  <section class="band-1" id="assure">
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow"><span class="num">IV</span> How your money is held</span>
@@ -536,7 +532,7 @@
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section class="contact band-1" id="contact">
+  <section class="contact band-2" id="contact">
     <div class="wrap contact-grid">
       <div>
         <span class="eyebrow">Get in touch</span>
@@ -567,7 +563,6 @@
   <!-- ============ PARTNERS ============ -->
   <div class="partners">
     <div class="wrap">
-      <p class="cap">Reserves, custody, and audits handled by regulated partners</p>
       <div class="partner-row">
         <div class="partner">Banking Partner<small>To be announced</small></div>
         <div class="partner">Reserve Custodian<small>To be announced</small></div>
