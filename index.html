@@ -3,24 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WorldVest Re — A Stablecoin / Reinsurance Model</title>
-<meta name="description" content="WorldVest Re is an alternative insurance solution utilizing a stablecoin/reinsurance model. WVDC is a fully reserved digital dollar for funding reinsurance, captives, and claims settlement.">
+<title>WorldVest Re — Alternative Insurance Solution</title>
+<meta name="description" content="WorldVest Re: an alternative insurance solution built on a stablecoin/reinsurance model. A three-year level-funded premium for self-funded medical benefit plans.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:      #0D1B2A;   /* underwriting ink */
-    --ink-2:    #13253A;   /* raised panel */
-    --hairline: #2A3D55;   /* rules on ink */
-    --paper:    #F2F4F6;   /* cool ledger paper */
-    --paper-2:  #E7EBEF;
-    --line:     #C9D2DA;   /* rules on paper */
-    --brass:    #B98A2F;   /* marine-insurance brass */
-    --brass-lt: #D8B25E;
-    --peg:      #1E7A5A;   /* stable green, used sparingly */
-    --muted:    #5B6B7C;
-    --muted-ink:#8FA0B3;
+    --ink:      #0D1B2A;   /* deepest — base sections */
+    --ink-2:    #13253A;   /* alternate section band */
+    --ink-3:    #1B3149;   /* raised cards / panels */
+    --hairline: #2A3D55;   /* rules */
+    --hairline-2:#39506D;  /* rules on raised panels */
+    --paper:    #EEF2F6;   /* primary text */
+    --muted:    #AFC0D1;   /* body text on ink — brightened */
+    --dim:      #8FA3B8;   /* captions, least important */
+    --brass:    #C79A3E;
+    --brass-lt: #DFBA6A;
     --display:  'Libre Caslon Display', Georgia, serif;
     --body:     'Public Sans', -apple-system, sans-serif;
     --mono:     'IBM Plex Mono', ui-monospace, monospace;
@@ -34,8 +33,8 @@
   }
   body{
     font-family:var(--body);
-    background:var(--paper);
-    color:var(--ink);
+    background:var(--ink);
+    color:var(--paper);
     line-height:1.6;
     font-size:16px;
     -webkit-font-smoothing:antialiased;
@@ -43,23 +42,27 @@
   a{color:inherit}
   .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
   ::selection{background:var(--brass-lt);color:var(--ink)}
-  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:2px}
+  :focus-visible{outline:2px solid var(--brass-lt);outline-offset:3px;border-radius:2px}
 
-  /* ---------- eyebrow / labels ---------- */
+  /* ---------- eyebrow / section numbering ---------- */
   .eyebrow{
     font-family:var(--mono);
     font-size:11px;
     letter-spacing:.22em;
     text-transform:uppercase;
-    color:var(--brass);
+    color:var(--brass-lt);
     display:flex;align-items:center;gap:12px;
   }
-  .eyebrow::before{content:"";width:28px;height:1px;background:var(--brass)}
+  .eyebrow .num{
+    color:var(--dim);
+    border:1px solid var(--hairline);
+    padding:3px 8px;letter-spacing:.1em;
+  }
 
   /* ---------- top bar ---------- */
   header{
     position:sticky;top:0;z-index:50;
-    background:rgba(13,27,42,.92);
+    background:rgba(13,27,42,.94);
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--hairline);
   }
@@ -73,244 +76,232 @@
     text-decoration:none;display:flex;align-items:baseline;gap:8px;
   }
   .brand .re{color:var(--brass-lt);font-style:italic}
-  .nav-links{display:flex;gap:28px;align-items:center;font-size:14px}
-  .nav-links a{text-decoration:none;color:var(--muted-ink);transition:color .15s}
+  .nav-links{display:flex;gap:26px;align-items:center;font-size:14px}
+  .nav-links a{text-decoration:none;color:var(--muted);transition:color .15s}
   .nav-links a:hover{color:var(--paper)}
   .nav-cta{
     font-family:var(--mono);font-size:12px;letter-spacing:.06em;
     color:var(--ink)!important;background:var(--brass-lt);
-    padding:8px 16px;text-decoration:none;
-    transition:background .15s;
+    padding:8px 16px;text-decoration:none;transition:background .15s;
   }
-  .nav-cta:hover{background:#E6C578}
-  @media(max-width:720px){.nav-links a:not(.nav-cta){display:none}}
+  .nav-cta:hover{background:#EBC87E}
+  @media(max-width:820px){.nav-links a:not(.nav-cta){display:none}}
 
-  /* ---------- hero : earth banner, centered ---------- */
-  .hero{
-    background:var(--ink);
-    color:var(--paper);
-    position:relative;
-  }
+  /* ---------- hero banner ---------- */
   .hero-banner{
     position:relative;
     background:var(--ink) url('wvrelanding.jpg') center / cover no-repeat;
   }
-  .hero-banner::before{ /* ink overlay keeps type legible over the image */
+  .hero-banner::before{
     content:"";position:absolute;inset:0;
     background:linear-gradient(180deg,
-      rgba(13,27,42,.60) 0%,
-      rgba(13,27,42,.38) 45%,
-      rgba(13,27,42,.94) 100%);
+      rgba(13,27,42,.72) 0%,
+      rgba(13,27,42,.40) 50%,
+      rgba(13,27,42,.86) 100%);
   }
   .hero-inner{
     position:relative;z-index:1;
-    padding:110px 24px 96px;
+    min-height:clamp(240px,36vh,400px);
+    padding:64px 24px;
     max-width:840px;margin:0 auto;
-    display:flex;flex-direction:column;align-items:center;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;
   }
-  .hero h1{
+  .hero-inner h1{
     font-family:var(--display);
     font-weight:400;
     font-size:clamp(44px,7vw,80px);
-    line-height:1.05;
-    letter-spacing:.01em;
-    margin:0 0 22px;
+    line-height:1.05;letter-spacing:.01em;margin:0;
+    text-shadow:0 2px 24px rgba(13,27,42,.6);
   }
-  .hero h1 .re{font-style:italic;color:var(--brass-lt)}
-  .hero .slogan{
-    margin:0 auto 18px;
+  .hero-inner h1 .re{font-style:italic;color:var(--brass-lt)}
+
+  /* ---------- hero copy band ---------- */
+  .hero-copy{
+    background:var(--ink);
+    border-top:1px solid var(--hairline);
+    text-align:center;padding:56px 24px 54px;
   }
-  .hero .slogan .s1{
-    display:block;
-    font-size:clamp(19px,2.4vw,24px);
-    font-weight:600;
-    letter-spacing:.02em;
-    color:var(--paper);
+  .hero-copy .inner{max-width:720px;margin:0 auto}
+  .slogan{margin:0 auto 18px}
+  .slogan .s1{
+    display:block;font-size:clamp(20px,2.5vw,26px);
+    font-weight:600;letter-spacing:.02em;color:var(--paper);
   }
-  .hero .slogan .s2{
-    display:block;
-    margin-top:6px;
-    font-size:clamp(15px,1.8vw,18px);
-    font-weight:400;
-    color:var(--muted-ink);
+  .slogan .s2{
+    display:block;margin-top:7px;
+    font-size:clamp(15px,1.8vw,18px);font-weight:400;color:var(--muted);
   }
-  .hero .sub{
-    font-size:15px;color:var(--muted-ink);
-    max-width:56ch;margin:0 auto 38px;
+  .hero-copy .sub{
+    font-size:15.5px;color:var(--muted);
+    max-width:60ch;margin:0 auto 34px;
   }
-  .hero .sub strong{color:var(--paper);font-weight:600}
-  .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
   .btn{
     display:inline-block;text-decoration:none;
     font-family:var(--mono);font-size:13px;letter-spacing:.05em;
     padding:14px 26px;transition:all .15s;
   }
   .btn-primary{background:var(--brass-lt);color:var(--ink)}
-  .btn-primary:hover{background:#E6C578}
-  .btn-ghost{border:1px solid var(--hairline);color:var(--paper)}
+  .btn-primary:hover{background:#EBC87E}
+  .btn-ghost{border:1px solid var(--hairline-2);color:var(--paper)}
   .btn-ghost:hover{border-color:var(--brass-lt);color:var(--brass-lt)}
 
-  /* ---------- schedule A : the peg, set like a treaty schedule ---------- */
-  .schedule{
-    border-top:1px solid var(--hairline);
-    background:var(--ink-2);
-    position:relative;z-index:1;
-  }
-  .schedule-head{
-    display:flex;justify-content:space-between;align-items:baseline;
-    padding:20px 0 0;flex-wrap:wrap;gap:8px;
-  }
-  .schedule-title{
-    font-family:var(--mono);font-size:11px;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--muted-ink);
-  }
-  .peg-line{
-    font-family:var(--mono);font-size:13px;color:var(--paper);
-  }
-  .peg-line .dot{
-    display:inline-block;width:7px;height:7px;border-radius:50%;
-    background:#39B58A;margin-right:8px;vertical-align:1px;
-  }
-  .schedule-grid{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    border-left:1px solid var(--hairline);
-    margin:18px 0 0;
-  }
-  .cell{
-    border-right:1px solid var(--hairline);
-    padding:22px 20px 26px;
-  }
-  .cell b{
-    display:block;
-    font-family:var(--mono);font-weight:500;
-    font-size:clamp(18px,2vw,24px);
-    color:var(--paper);margin-bottom:6px;
-  }
-  .cell span{font-size:12.5px;color:var(--muted-ink);line-height:1.45;display:block}
-  .schedule-foot{
-    font-size:12.5px;color:var(--muted-ink);
-    border-top:1px solid var(--hairline);
-    padding:14px 0 22px;
-    font-family:var(--mono);
-  }
-  @media(max-width:900px){
-    .schedule-grid{grid-template-columns:repeat(2,1fr);border-top:1px solid var(--hairline)}
-    .cell{border-bottom:1px solid var(--hairline)}
-  }
-  @media(max-width:480px){.schedule-grid{grid-template-columns:1fr}}
-
-  /* ---------- sections ---------- */
+  /* ---------- generic section ---------- */
   section{padding:96px 0}
-  .sec-head{max-width:640px;margin-bottom:56px}
+  .band-2{background:var(--ink-2);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
+  .band-1{background:var(--ink)}
+  .sec-head{max-width:660px;margin-bottom:54px}
+  #assure .sec-head{max-width:720px;margin-bottom:38px}
+  #assure .sec-head strong{color:var(--paper);font-weight:600}
   .sec-head h2{
     font-family:var(--display);font-weight:400;
     font-size:clamp(28px,3.6vw,42px);
-    line-height:1.12;margin:18px 0 16px;
+    line-height:1.14;margin:18px 0 16px;color:var(--paper);
   }
   .sec-head p{color:var(--muted);font-size:16.5px}
 
-  /* ---------- the model : capital tower (signature) ---------- */
-  .model{background:var(--paper)}
-  .model-grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;
+  /* ---------- I. challenge / solution ---------- */
+  .cs-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:stretch}
+  @media(max-width:880px){.cs-grid{grid-template-columns:1fr}}
+  .cs-card{border:1px solid var(--hairline-2);padding:32px 30px 34px;background:var(--ink)}
+  .cs-card.answer{background:var(--ink-3);border-left:3px solid var(--brass)}
+  .cs-label{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--dim);display:block;margin-bottom:14px;
   }
-  @media(max-width:880px){.model-grid{grid-template-columns:1fr}}
-  .tower{
-    border:1px solid var(--line);
-    background:#fff;
-    padding:34px 30px 26px;
+  .cs-card.answer .cs-label{color:var(--brass-lt)}
+  .cs-card h3{font-family:var(--display);font-weight:400;font-size:27px;margin-bottom:12px;color:var(--paper)}
+  .cs-card p{color:var(--muted);font-size:15.5px;margin-bottom:16px}
+  .cs-card ul{list-style:none}
+  .cs-card li{
+    font-size:14.5px;color:var(--muted);
+    padding:10px 0 10px 20px;position:relative;border-top:1px solid var(--hairline-2);
   }
+  .cs-card li::before{content:"—";position:absolute;left:0;color:var(--brass)}
+  .cs-figure{
+    border-top:1px solid var(--hairline-2);border-bottom:1px solid var(--hairline-2);
+    padding:18px 0;margin:4px 0 18px;
+  }
+  .cs-figure b{
+    display:block;font-family:var(--mono);font-weight:500;
+    font-size:34px;color:var(--brass-lt);letter-spacing:-.01em;
+  }
+  .cs-figure span{
+    font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--dim);
+  }
+  .cs-note{font-size:14px;color:var(--muted);margin-bottom:0!important}
+
+  /* ---------- II. the model ---------- */
+  .model-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+  @media(max-width:880px){.model-grid{grid-template-columns:1fr;gap:44px}}
+  .tower{border:1px solid var(--hairline-2);background:var(--ink-3);padding:32px 28px 26px}
   .tower-caption{
     font-family:var(--mono);font-size:11px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--muted);
-    display:flex;justify-content:space-between;margin-bottom:22px;
+    text-transform:uppercase;color:var(--dim);
+    display:flex;justify-content:space-between;gap:10px;margin-bottom:22px;
   }
   .layer{
-    border:1px solid var(--line);
+    border:1px solid var(--hairline-2);
     border-left:3px solid var(--brass);
-    padding:14px 18px;
-    margin-bottom:10px;
+    padding:14px 18px;margin-bottom:10px;
     display:flex;justify-content:space-between;align-items:baseline;gap:12px;
-    background:var(--paper);
+    background:var(--ink-2);
   }
-  .layer.top{border-left-color:var(--brass-lt);background:#fff}
-  .layer.base{border-left-color:var(--ink);background:var(--paper-2)}
-  .layer .name{font-weight:600;font-size:14.5px}
-  .layer .role{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;white-space:nowrap}
+  .layer.top{border-left-color:var(--brass-lt);background:#22405E}
+  .layer.base{border-left-color:var(--hairline-2);background:var(--ink)}
+  .layer .name{font-weight:600;font-size:14.5px;color:var(--paper)}
+  .layer .role{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right}
   .flow{
-    display:flex;align-items:center;gap:10px;
-    font-family:var(--mono);font-size:11.5px;color:var(--muted);
-    margin:16px 0 6px;
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11.5px;color:var(--dim);margin:16px 0 6px;
   }
-  .flow .arrow{color:var(--brass);font-size:14px}
+  .flow .arrow{color:var(--brass-lt);font-size:14px}
   .tower-note{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.55}
-  .model-copy h3{
-    font-family:var(--display);font-weight:400;font-size:22px;margin:26px 0 8px;
-  }
+  .model-copy h3{font-family:var(--display);font-weight:400;font-size:22px;margin:26px 0 8px;color:var(--paper)}
   .model-copy h3:first-child{margin-top:0}
-  .model-copy p{color:var(--muted);font-size:15.5px;margin-bottom:4px}
+  .model-copy p{color:var(--muted);font-size:15.5px}
 
-  /* ---------- use cases ---------- */
-  .uses{background:var(--ink);color:var(--paper)}
-  .uses .sec-head p{color:var(--muted-ink)}
-  .use-grid{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:1px;background:var(--hairline);border:1px solid var(--hairline)}
+  /* ---------- schedule A (inside section IV) ---------- */
+  .schedule-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:0 0 14px;flex-wrap:wrap;gap:8px;
+    border-bottom:1px solid var(--hairline-2);
+  }
+  .schedule-title{
+    font-family:var(--mono);font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--dim);
+  }
+  .peg-line{font-family:var(--mono);font-size:13px;color:var(--paper)}
+  .peg-line .dot{
+    display:inline-block;width:7px;height:7px;border-radius:50%;
+    background:#3FC79A;margin-right:8px;vertical-align:1px;
+  }
+  .schedule-grid{
+    display:grid;grid-template-columns:repeat(5,1fr);
+    border-left:1px solid var(--hairline-2);
+    margin:0 0 62px;
+  }
+  .cell{border-right:1px solid var(--hairline-2);padding:22px 20px 26px;background:var(--ink)}
+  .cell b{
+    display:block;font-family:var(--mono);font-weight:500;
+    font-size:clamp(18px,2vw,24px);color:var(--paper);margin-bottom:6px;
+  }
+  .cell span{font-size:12.5px;color:var(--muted);line-height:1.45;display:block}
+  @media(max-width:900px){
+    .schedule-grid{grid-template-columns:repeat(2,1fr);border-top:1px solid var(--hairline-2)}
+    .cell{border-bottom:1px solid var(--hairline-2)}
+  }
+  @media(max-width:480px){.schedule-grid{grid-template-columns:1fr}}
+
+  /* ---------- III. where it applies ---------- */
+  .use-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:1px;background:var(--hairline);border:1px solid var(--hairline)}
   @media(max-width:880px){.use-grid{grid-template-columns:1fr}}
   .use{background:var(--ink-2);padding:34px 30px 38px}
-  .use.primary{background:var(--ink-2);border-top:3px solid var(--brass-lt)}
+  .use.primary{background:var(--ink-3);border-top:3px solid var(--brass-lt)}
   .use .tag{
     font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
     text-transform:uppercase;color:var(--brass-lt);display:block;margin-bottom:16px;
   }
-  .use h3{font-family:var(--display);font-weight:400;font-size:22px;margin-bottom:12px;line-height:1.25}
-  .use p{color:var(--muted-ink);font-size:14.5px;margin-bottom:14px}
+  .use h3{font-family:var(--display);font-weight:400;font-size:22px;margin-bottom:12px;line-height:1.25;color:var(--paper)}
+  .use p{color:var(--muted);font-size:14.5px;margin-bottom:14px}
   .use ul{list-style:none}
   .use li{
-    font-size:14px;color:var(--muted-ink);
-    padding:9px 0 9px 22px;position:relative;
-    border-top:1px solid var(--hairline);
+    font-size:14px;color:var(--muted);
+    padding:9px 0 9px 22px;position:relative;border-top:1px solid var(--hairline-2);
   }
   .use li::before{content:"—";position:absolute;left:0;color:var(--brass)}
 
-  /* ---------- assurance : reserved / verified / redeemable ---------- */
-  .assure{background:var(--paper)}
+  /* ---------- IV. reserves ---------- */
   .assure-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
-  @media(max-width:880px){.assure-grid{grid-template-columns:1fr;gap:28px}}
-  .assure-item{border-top:2px solid var(--ink);padding-top:22px}
-  .assure-item .q{
-    font-family:var(--mono);font-size:12px;color:var(--brass);
-    display:block;margin-bottom:10px;
-  }
-  .assure-item h3{font-family:var(--display);font-weight:400;font-size:24px;margin-bottom:10px}
+  @media(max-width:880px){.assure-grid{grid-template-columns:1fr;gap:30px}}
+  .assure-item{border-top:2px solid var(--brass);padding-top:22px}
+  .assure-item h3{font-family:var(--display);font-weight:400;font-size:24px;margin-bottom:10px;color:var(--paper)}
   .assure-item p{color:var(--muted);font-size:14.5px}
-  .genius{
-    margin-top:64px;border:1px solid var(--line);background:#fff;
-    padding:26px 30px;display:flex;gap:18px;align-items:baseline;flex-wrap:wrap;
-    font-size:15px;
+  .genius-line{
+    margin-top:52px;padding-top:26px;border-top:1px solid var(--hairline);
+    font-family:var(--mono);font-size:13px;letter-spacing:.06em;
+    color:var(--dim);text-align:center;
   }
-  .genius .mark{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--brass);text-transform:uppercase;white-space:nowrap}
+  .genius-line strong{color:var(--paper);font-weight:500}
 
   /* ---------- contact ---------- */
-  .contact{background:var(--ink);color:var(--paper)}
-  .contact-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:start}
+  .contact-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:start}
   @media(max-width:880px){.contact-grid{grid-template-columns:1fr;gap:40px}}
   .contact h2{
     font-family:var(--display);font-weight:400;
     font-size:clamp(28px,3.4vw,40px);line-height:1.14;margin:18px 0 16px;
   }
-  .contact p{color:var(--muted-ink);font-size:15.5px}
+  .contact p{color:var(--muted);font-size:15.5px}
   form{display:flex;flex-direction:column;gap:16px}
   label{
     font-family:var(--mono);font-size:11px;letter-spacing:.15em;
-    text-transform:uppercase;color:var(--muted-ink);
-    display:block;margin-bottom:7px;
+    text-transform:uppercase;color:var(--dim);display:block;margin-bottom:7px;
   }
   input[type=text],input[type=email]{
-    width:100%;background:var(--ink-2);
-    border:1px solid var(--hairline);
-    color:var(--paper);padding:13px 15px;font-size:15px;
-    font-family:var(--body);
+    width:100%;background:var(--ink);border:1px solid var(--hairline-2);
+    color:var(--paper);padding:13px 15px;font-size:15px;font-family:var(--body);
   }
   input:focus{border-color:var(--brass-lt);outline:none}
   .submit{
@@ -319,34 +310,29 @@
     background:var(--brass-lt);color:var(--ink);
     padding:14px 28px;margin-top:6px;transition:background .15s;
   }
-  .submit:hover{background:#E6C578}
-  .fine{font-size:12.5px;color:var(--muted-ink);margin-top:4px}
-  .success{
-    display:none;border:1px solid var(--hairline);background:var(--ink-2);
-    padding:26px;margin-top:4px;
-  }
+  .submit:hover{background:#EBC87E}
+  .fine{font-size:12.5px;color:var(--dim);margin-top:4px}
+  .success{display:none;border:1px solid var(--hairline-2);background:var(--ink);padding:26px}
   .success.show{display:block}
   .success b{font-family:var(--display);font-weight:400;font-size:19px;display:block;margin-bottom:6px}
-  .success span{font-size:14px;color:var(--muted-ink)}
+  .success span{font-size:14px;color:var(--muted)}
 
   /* ---------- partners / footer ---------- */
-  .partners{background:var(--ink);border-top:1px solid var(--hairline);padding:44px 0}
+  .partners{background:var(--ink);border-top:1px solid var(--hairline);padding:44px 0 0}
   .partners .cap{
     font-family:var(--mono);font-size:11px;letter-spacing:.2em;
-    text-transform:uppercase;color:var(--muted-ink);margin-bottom:24px;
+    text-transform:uppercase;color:var(--dim);margin-bottom:24px;
   }
   .partner-row{display:flex;gap:1px;background:var(--hairline);border:1px solid var(--hairline);flex-wrap:wrap}
   .partner{
-    flex:1;min-width:180px;background:var(--ink-2);
-    padding:22px;text-align:center;
+    flex:1;min-width:180px;background:var(--ink-2);padding:22px;text-align:center;
     font-family:var(--mono);font-size:12px;color:var(--paper);letter-spacing:.06em;
   }
   .partner small{
-    display:block;margin-top:6px;
-    font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--muted-ink);
+    display:block;margin-top:6px;font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--dim);
   }
-  footer{background:var(--ink);border-top:1px solid var(--hairline);padding:34px 0 44px;color:var(--muted-ink)}
+  footer{background:var(--ink);padding:38px 0 44px;color:var(--dim)}
   .foot-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
   .foot-brand{font-family:var(--display);font-size:18px;color:var(--paper)}
   .foot-brand .re{color:var(--brass-lt);font-style:italic}
@@ -359,8 +345,9 @@
   <div class="wrap nav">
     <a class="brand" href="#top">WorldVest <span class="re">Re</span></a>
     <nav class="nav-links" aria-label="Main">
+      <a href="#challenge">For CFOs</a>
       <a href="#model">The model</a>
-      <a href="#uses">What it's for</a>
+      <a href="#uses">Where it applies</a>
       <a href="#assure">Reserves</a>
       <a class="nav-cta" href="#contact">Book a call</a>
     </nav>
@@ -369,50 +356,69 @@
 
 <main id="top">
 
-  <!-- ============ HERO ============ -->
-  <div class="hero">
-    <div class="hero-banner">
-      <div class="hero-inner">
-        <h1>WorldVest <span class="re">Re</span></h1>
-        <p class="slogan"><span class="s1">Alternative Insurance Solution</span><span class="s2">Built on a Stablecoin&#8202;/&#8202;Reinsurance Model</span></p>
-        <p class="sub"><strong>WVDC</strong> is WorldVest Re's digital dollar: redeemable 1:1 for U.S. dollars, interoperable with USDC, and settled in seconds instead of days.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="#contact">Book an exploratory call</a>
-          <a class="btn btn-ghost" href="#model">How the model works</a>
-        </div>
-      </div>
+  <!-- ============ HERO BANNER ============ -->
+  <div class="hero-banner">
+    <div class="hero-inner">
+      <h1>WorldVest <span class="re">Re</span></h1>
     </div>
+  </div>
 
-    <!-- Schedule A : peg + guarantees, set like a treaty schedule -->
-    <div class="schedule">
-      <div class="wrap">
-        <div class="schedule-head">
-          <span class="schedule-title">Schedule A — WorldVest Digital Coin (WVDC)</span>
-          <span class="peg-line"><span class="dot" aria-hidden="true"></span>1 WVDC = 1.00 USD</span>
-        </div>
-        <div class="schedule-grid" role="list">
-          <div class="cell" role="listitem"><b>1 : 1</b><span>Redeemable at par for U.S. dollars, any time</span></div>
-          <div class="cell" role="listitem"><b>100%</b><span>Reserved in cash &amp; short-term U.S. treasuries</span></div>
-          <div class="cell" role="listitem"><b>Monthly</b><span>Independent reserve attestations, published</span></div>
-          <div class="cell" role="listitem"><b>24 / 7</b><span>On-chain settlement — no cutoffs, no wire windows</span></div>
-          <div class="cell" role="listitem"><b>T + 0</b><span>Same-day funding of collateral and claims, USDC-interoperable</span></div>
-        </div>
-        <p class="schedule-foot">Reserves held with regulated custodians, segregated from operating funds. Live reserve dashboard at launch.</p>
+  <div class="hero-copy">
+    <div class="inner">
+      <p class="slogan"><span class="s1">Alternative Insurance Solution</span><span class="s2">Built on a Stablecoin&#8202;/&#8202;Reinsurance Model</span></p>
+      <p class="sub">A three-year level-funded premium for self-funded medical benefit plans — reinsurance that absorbs the volatility, funded in a fully reserved digital dollar.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#contact">Book an exploratory call</a>
+        <a class="btn btn-ghost" href="#model">How the model works</a>
       </div>
     </div>
   </div>
 
-  <!-- ============ THE MODEL ============ -->
-  <section class="model" id="model">
+  <!-- ============ I. CHALLENGE / SOLUTION ============ -->
+  <section class="band-2" id="challenge">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">The model</span>
+        <span class="eyebrow"><span class="num">I</span> For CFOs</span>
+        <h2>Self-funding solves cost. It doesn't solve predictability.</h2>
+      </div>
+      <div class="cs-grid">
+
+        <div class="cs-card problem">
+          <span class="cs-label">The challenge</span>
+          <h3>Predictability</h3>
+          <p>For CFOs self-funding medical benefit plans, the vexing problem isn't the average cost — it's the variance. One catastrophic claim year turns a budgeted line item into an unbudgeted event, and annual renewals reprice the risk every twelve months.</p>
+          <ul>
+            <li>Claims volatility lands directly on the P&amp;L</li>
+            <li>Annual stop-loss renewals reset the cost basis</li>
+            <li>Reserves sit idle, tied up against a worst case</li>
+          </ul>
+        </div>
+
+        <div class="cs-card answer">
+          <span class="cs-label">The solution</span>
+          <h3>A 3-year level-funded premium</h3>
+          <p>WorldVest Re, through its stablecoin&#8202;/&#8202;reinsurance model, offers a level-funded premium held for three years — one fixed, budgetable number across the full term instead of a renewal cycle you can't forecast.</p>
+          <div class="cs-figure">
+            <b>3 &nbsp;years</b>
+            <span>Level-funded premium term</span>
+          </div>
+          <p class="cs-note">The reinsurance layer absorbs the volatility. The digital dollar makes the reserves behind it liquid, provable, and same-day — so the guarantee is funded, not just promised.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ II. THE MODEL ============ -->
+  <section class="band-1" id="model">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow"><span class="num">II</span> The model</span>
         <h2>Risk capital that clears like cash, because it is cash.</h2>
-        <p>In a traditional program, money is the slow part: premium wires, collateral postings, letters of credit, claims funding across borders. WorldVest Re replaces the idle, in-transit dollar with a reserved digital one.</p>
+        <p>Behind the fixed premium sits a reinsurance tower — and every layer of it is funded in a reserved digital dollar rather than money in transit.</p>
       </div>
       <div class="model-grid">
 
-        <!-- signature: the capital tower -->
         <div class="tower" aria-label="Diagram of a reinsurance program funded in WVDC">
           <div class="tower-caption"><span>Program structure</span><span>Funded in WVDC</span></div>
 
@@ -428,7 +434,7 @@
           </div>
           <div class="layer base">
             <span class="name">Retention</span>
-            <span class="role">Captive / self-insured reserves</span>
+            <span class="role">Plan / captive reserves</span>
           </div>
 
           <div class="flow"><span>Claims out</span><span class="arrow">▼</span><span>Redeem WVDC → USD at par</span></div>
@@ -438,7 +444,7 @@
 
         <div class="model-copy">
           <h3>Fund the structure</h3>
-          <p>Cedents, captives, and reinsurers capitalize the program in WVDC. Reserves are visible on-chain, attested monthly, and never leave regulated custody.</p>
+          <p>Plan sponsors, captives, and reinsurers capitalize the program in WVDC. Reserves are visible on-chain, attested monthly, and never leave regulated custody.</p>
           <h3>Move between parties</h3>
           <p>Premium cessions, collateral top-ups, and inter-entity transfers settle in seconds, 24/7 — not on banking hours, and not by correspondent chains.</p>
           <h3>Pay the claim</h3>
@@ -449,82 +455,89 @@
     </div>
   </section>
 
-  <!-- ============ USE CASES ============ -->
-  <section class="uses" id="uses">
+  <!-- ============ III. WHERE IT APPLIES ============ -->
+  <section class="band-1" id="uses">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">What it's for</span>
-        <h2>Built first for reinsurance and captive funding.</h2>
-        <p>Anywhere reserves must be safe, liquid, and provable — and anywhere the wire is the bottleneck.</p>
+        <span class="eyebrow"><span class="num">III</span> Where it applies</span>
+        <h2>Built first for benefit plans. Useful anywhere reserves must be liquid and provable.</h2>
       </div>
       <div class="use-grid">
 
         <div class="use primary">
           <span class="tag">Primary use case</span>
-          <h3>Reinsurance &amp; captive reserves</h3>
-          <p>Cedents, captives, and TPAs hold reserves against future claims — money that has to be safe, liquid, and auditable. WVDC lets you hold and move those reserves as stable, redeemable cash equivalents, visible on-chain.</p>
+          <h3>Self-funded medical benefit plans</h3>
+          <p>Employers self-funding medical benefits carry the claims risk themselves — and with it, the volatility. WorldVest Re wraps that exposure in a reinsurance layer and funds it in WVDC.</p>
           <ul>
-            <li>Fund captive structures and self-insured plans</li>
-            <li>Post and release collateral same-day</li>
-            <li>Auditable position and transfer history</li>
-            <li>Redeem to U.S. dollars when claims come due</li>
+            <li>Three-year level-funded premium — one number to budget</li>
+            <li>Reinsurance layer absorbs catastrophic claim years</li>
+            <li>Claim funds available same-day, not on wire windows</li>
+            <li>Auditable reserve position for plan, TPA, and auditor</li>
           </ul>
         </div>
 
         <div class="use">
           <span class="tag">Also supports</span>
-          <h3>Premium &amp; claims settlement</h3>
-          <p>Move premium cessions and claim payments across borders and entities in seconds, for a fraction of wire and FX costs — with a clear off-ramp to local currency.</p>
+          <h3>Captive &amp; reinsurance reserves</h3>
+          <p>Cedents, captives, and TPAs hold reserves against future claims. WVDC lets you hold and move them as stable, redeemable cash equivalents — and post or release collateral the same day.</p>
         </div>
 
         <div class="use">
           <span class="tag">Also supports</span>
-          <h3>Corporate treasury</h3>
-          <p>Hold operating cash as stable, redeemable digital dollars. Move between entities, markets, and USDC liquidity instantly — no cutoff times, no correspondent banks.</p>
+          <h3>Premium &amp; claims settlement</h3>
+          <p>Move premium cessions and claim payments across entities and borders in seconds, for a fraction of wire and FX cost — with a clear off-ramp back to U.S. dollars.</p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ============ ASSURANCE ============ -->
-  <section class="assure" id="assure">
+  <!-- ============ IV. RESERVES ============ -->
+  <section class="band-2" id="assure">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">How your money is held</span>
+        <span class="eyebrow"><span class="num">IV</span> How your money is held</span>
         <h2>Every WVDC is a claim on a real dollar.</h2>
+        <p><strong>WVDC</strong> is WorldVest Re's digital dollar — the instrument every layer of the structure is funded in. Redeemable 1:1 for U.S. dollars, interoperable with USDC, and settled in seconds instead of days.</p>
       </div>
+
+      <div class="schedule-head">
+        <span class="schedule-title">Schedule A — WorldVest Digital Coin (WVDC)</span>
+        <span class="peg-line"><span class="dot" aria-hidden="true"></span>1 WVDC = 1.00 USD</span>
+      </div>
+      <div class="schedule-grid" role="list">
+        <div class="cell" role="listitem"><b>1 : 1</b><span>Redeemable at par for U.S. dollars, any time</span></div>
+        <div class="cell" role="listitem"><b>100%</b><span>Reserved in cash &amp; short-term U.S. treasuries</span></div>
+        <div class="cell" role="listitem"><b>Monthly</b><span>Independent reserve attestations, published</span></div>
+        <div class="cell" role="listitem"><b>24 / 7</b><span>On-chain settlement — no cutoffs, no wire windows</span></div>
+        <div class="cell" role="listitem"><b>T + 0</b><span>Same-day funding of collateral and claims, USDC-interoperable</span></div>
+      </div>
+
       <div class="assure-grid">
         <div class="assure-item">
-          <span class="q">Will it hold its value?</span>
           <h3>Reserved</h3>
           <p>Every WVDC is backed one-for-one by cash and short-term U.S. treasuries, held at regulated custodians and segregated from WorldVest Re's own operating funds. It is designed to stay at exactly one dollar.</p>
         </div>
         <div class="assure-item">
-          <span class="q">Who is holding my money?</span>
           <h3>Verified</h3>
           <p>Reserves sit in segregated accounts at named third-party custodians — not with us alone. Independent accountants attest to reserves on a published schedule, and our contracts are audited and continuously monitored.</p>
         </div>
         <div class="assure-item">
-          <span class="q">Can I redeem at par, any time?</span>
           <h3>Redeemable</h3>
           <p>Redeem WVDC 1:1 for U.S. dollars or swap to USDC at par, any time. No lockups, no withdrawal windows — your money is available when claims come due.</p>
         </div>
       </div>
-      <div class="genius">
-        <span class="mark">Regulatory posture</span>
-        <span>Built for the era of the <strong>GENIUS Act</strong>: clear legal structure, licensed partners, and no gray zones.</span>
-      </div>
+      <p class="genius-line">Built for the era of the <strong>GENIUS Act</strong>.</p>
     </div>
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section class="contact" id="contact">
+  <section class="contact band-1" id="contact">
     <div class="wrap contact-grid">
       <div>
         <span class="eyebrow">Get in touch</span>
-        <h2>Talk to us about your program.</h2>
-        <p>Whether you're a cedent, a captive manager, a TPA, a self-insured employer, or a broker — leave your email and we'll schedule a 30-minute exploratory call. No pitch deck, just a working conversation about whether a stable digital dollar fits how you fund and hold reserves.</p>
+        <h2>Talk to us about your plan.</h2>
+        <p>Whether you're a CFO, a benefits broker, a captive manager, a TPA, or a plan sponsor — leave your email and we'll schedule a 30-minute exploratory call. No pitch deck, just a working conversation about whether a three-year level-funded structure fits your plan.</p>
       </div>
       <div>
         <form id="callForm" novalidate>
